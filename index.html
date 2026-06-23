@@ -17,9 +17,13 @@
             <h2>Set New Alarm</h2>
             <div class="alarm-form">
                 <div class="time-inputs">
-                    <input type="number" id="hour" min="0" max="23" placeholder="HH" required>
+                    <input type="number" id="hour" min="1" max="12" placeholder="HH" required>
                     <span>:</span>
                     <input type="number" id="minute" min="0" max="59" placeholder="MM" required>
+                    <select id="ampm">
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                    </select>
                 </div>
                 <input type="text" id="label" placeholder="Label (optional)">
                 <button id="set-alarm-btn">Set Alarm</button>

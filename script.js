@@ -38,12 +38,20 @@ class DeepSleeperAlarm {
     }
 
     setAlarm() {
-        const hour = parseInt(document.getElementById('hour').value) || 0;
+        let hour = parseInt(document.getElementById('hour').value) || 1;
         const minute = parseInt(document.getElementById('minute').value) || 0;
+        const ampm = document.getElementById('ampm').value;
         const label = document.getElementById('label').value.trim() || 'Alarm';
 
+        // Convert 12-hour to 24-hour format
+        if (ampm === 'PM' && hour !== 12) {
+            hour += 12;
+        } else if (ampm === 'AM' && hour === 12) {
+            hour = 0;
+        }
+
         if (hour < 0 || hour > 23 || minute < 0 || minute > 59) {
-            alert('Please enter valid time (0-23 for hours, 0-59 for minutes)');
+            alert('Please enter valid time (1-12 for hours, 0-59 for minutes)');
             return;
         }
 
@@ -66,6 +74,7 @@ class DeepSleeperAlarm {
         document.getElementById('hour').value = '';
         document.getElementById('minute').value = '';
         document.getElementById('label').value = '';
+        document.getElementById('ampm').value = 'AM';
     }
 
     renderAlarms() {
@@ -94,7 +103,9 @@ class DeepSleeperAlarm {
     }
 
     formatTime(hour, minute) {
-        return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+        const period = hour >= 12 ? 'PM' : 'AM';
+        const displayHour = hour % 12 || 12;
+        return `${displayHour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')} ${period}`;
     }
 
     toggleAlarm(id) {
